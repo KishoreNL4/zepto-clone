@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+/* LoginPage.css */
+
+.background {
+  background-image: url("../public/images/bglogin.jpg"); /* Replace with your image path */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent repeating the image */
+}
