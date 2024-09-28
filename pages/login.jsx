@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { FaArrowLeft } from "react-icons/fa"; // Importing back icon
 
 const LoginPage = () => {
   const router = useRouter();
@@ -63,9 +64,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center px-16 items-end bg-gray-100 background">
+    <div className="min-h-screen flex flex-col justify-center px-16 items-center lg:items-end bg-gray-100 background">
       <ToastContainer />
-      <div className="bg-white/40 shadow-lg rounded-lg p-10 w-full max-w-md">
+      <button
+        onClick={handleBack}
+        className="absolute top-5 left-5 text-gray-700" // Positioning the back button
+      >
+        <FaArrowLeft size={24} /> {/* Back icon */}
+      </button>
+      <div className="bg-white/90 lg:bg-white/40 shadow-lg rounded-lg p-10 w-full max-w-sm lg:max-w-md">
         <div className="flex items-center py-4">
           <h1 className="text-3xl text-orange-500 font-bold">
             <span className="text-green-400 font-serif tracking-wide">Pre</span>

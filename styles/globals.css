@@ -34,3 +34,12 @@ body {
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent repeating the image */
 }
+/* Hide scrollbar but keep scrolling functional */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}

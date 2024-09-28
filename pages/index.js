@@ -2,6 +2,12 @@ import Image from "next/image";
 import localFont from "next/font/local";
 import Header from "../components/Header";
 import AutoSlider from "../components/slider";
+import Category from "./homescreen/category";
+import Homeproduct from "./homescreen/homeproduct";
+import Featuredbrand from "./homescreen/featuredbrand";
+import Productcat1 from "./homescreen/productcat1";
+import Productcat2 from "./homescreen/productcat2";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,6 +25,12 @@ export default function Home() {
     <div>
       <Header />
       <AutoSlider />
+      <Category />
+      <Homeproduct />
+      <Featuredbrand />
+      <Productcat1 />
+      <Productcat2 />
+      <Footer />
     </div>
   );
 }

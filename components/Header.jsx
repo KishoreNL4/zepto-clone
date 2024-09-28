@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaChevronDown,
   FaMapMarkerAlt,
@@ -33,8 +33,49 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
+  const [place, setPlace] = useState(null);
+  const [error, setError] = useState(null);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchPlaceName(latitude, longitude);
+          setError(null);
+        },
+        (err) => {
+          setError(err.message);
+          setPlace(null);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const fetchPlaceName = async (latitude, longitude) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
+      const data = await response.json();
+      setPlace(data.display_name); // Get the place name from the response
+    } catch (error) {
+      setError("Failed to fetch location name.");
+    }
+  };
+
+  const truncatePlaceName = (name) => {
+    const words = name.split(" ");
+    return words.length > 5 ? words.slice(0, 5).join(" ") + "..." : name;
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
   return (
-    <header className="bg-yellow-400 text-white">
+    <header className="bg-yellow-400 text-white z-10">
       {/* First Row */}
       <div className="flex justify-between text-gray-600 items-center py-2 px-4 md:px-20 text-sm font-sans tracking-wide">
         <span>Delivery in 10 minutes</span>
@@ -72,6 +113,21 @@ const Header = () => {
             </span>
           </h1>
         </div>
+        <div>
+          {!place ? (
+            <button
+              onClick={getLocation}
+              className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600"
+            >
+              Get My Location
+            </button>
+          ) : (
+            <p className="mt-4 text-sm w-[190px] text-green-600">
+              Location: {truncatePlaceName(place)}
+            </p>
+          )}
+          {error && <p className="mt-4 text-lg text-red-600">{error}</p>}
+        </div>
 
         {/* Hamburger Icon for small screens */}
         <div className="md:hidden">
@@ -101,10 +157,10 @@ const Header = () => {
           </Link>
           <span className="text-gray-300">|</span>
 
-          <a href="#" className="flex items-center space-x-2">
+          <Link href="/cart" className="flex items-center space-x-2">
             <FaShoppingCart className="text-green-400" />
             <span>Cart</span>
-          </a>
+          </Link>
         </div>
       </div>
 
